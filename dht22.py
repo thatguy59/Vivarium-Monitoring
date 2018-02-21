@@ -27,8 +27,7 @@ def main():
            RH1, T1 = getSensorData(17)
            RH2, T2 = getSensorData(27)
            # Print to screen
-           lcd.clear
-           lcd.cursor_pos = (0, 0)
+           lcd.clear()
            lcd.write_string("H1:%.1f T1:%.1f" % ( float(RH1), float(T1)  ))
            lcd.cursor_pos = (1, 0)
            lcd.write_string("H2:%.1f T2:%.1f" % ( float(RH2), float(T2)  ))
@@ -39,7 +38,9 @@ def main():
            f.close() 
            sleep(120) #uploads DHT22 sensor values every 5 minutes 
        except: 
-           print 'exiting.' 
+           print 'exiting.'
+           lcd.clear()
+           lcd.write_string("INACTIVE")
            break 
 # call main 
 if __name__ == '__main__': 
