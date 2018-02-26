@@ -23,18 +23,22 @@ def getSensorData(pin):
     (RH, T) = Adafruit_DHT.read(Adafruit_DHT.DHT22, pin)
     return (str(RH), str(T))
 
+def displaySensorData():
+    lcd.clear()
+    lcd.cursor_pos = (0, 0)
+    lcd.write_string('H1:%.1f T1:%.1f' % (float(RH1), float(T1)))
+    lcd.cursor_pos = (1, 0)
+    lcd.write_string('H2:%.1f T2:%.1f' % (float(RH2), float(T2)))
 
-def sensorLoop():
+def sensorLoop():   
+    global RH1, RH2, T1, T2
     while True:
         # Get temps
         (RH1, T1) = getSensorData(17)
         (RH2, T2) = getSensorData(27)
 
         # Print to screen
-        lcd.clear()
-        lcd.write_string('H1:%.1f T1:%.1f' % (float(RH1), float(T1)))
-        lcd.cursor_pos = (1, 0)
-        lcd.write_string('H2:%.1f T2:%.1f' % (float(RH2), float(T2)))
+        displaySensorData();
 
         # Send API message
         f = urllib2.urlopen(baseURL
@@ -49,7 +53,7 @@ def buttonLoop():
         input_state = GPIO.input(12)
         sleep(0.2)
         if input_state == False:
-            print 'Button Pressed'
+            print RH1, RH2, T1, T2
 
 def main():
     try:
