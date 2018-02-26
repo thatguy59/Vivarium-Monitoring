@@ -25,41 +25,31 @@ def getSensorData(pin):
 
 
 def sensorLoop():
-    try:
-        while True:
-            # Get temps
-            (RH1, T1) = getSensorData(17)
-            (RH2, T2) = getSensorData(27)
+    while True:
+        # Get temps
+        (RH1, T1) = getSensorData(17)
+        (RH2, T2) = getSensorData(27)
 
-            # Print to screen
-            lcd.clear()
-            lcd.write_string('H1:%.1f T1:%.1f' % (float(RH1), float(T1)))
-            lcd.cursor_pos = (1, 0)
-            lcd.write_string('H2:%.1f T2:%.1f' % (float(RH2), float(T2)))
+        # Print to screen
+        lcd.clear()
+        lcd.write_string('H1:%.1f T1:%.1f' % (float(RH1), float(T1)))
+        lcd.cursor_pos = (1, 0)
+        lcd.write_string('H2:%.1f T2:%.1f' % (float(RH2), float(T2)))
 
-            # Send API message
-            f = urllib2.urlopen(baseURL
-                                + '&field1=%s&field2=%s&field3=%s&field4=%s'
-                                 % (RH1, T1, RH2, T2))
-            print f.read()
-            f.close()
-            sleep(120)  # uploads DHT22 sensor values every 3 minutes
-    except:
-        print 'Error in sensor loop'
-        traceback.print_exc()
-
+        # Send API message
+        f = urllib2.urlopen(baseURL
+                            + '&field1=%s&field2=%s&field3=%s&field4=%s'
+                             % (RH1, T1, RH2, T2))
+        print f.read()
+        f.close()
+        sleep(120)  # uploads DHT22 sensor values every 3 minutes
 
 def buttonLoop():
-    try:
-        while True:
-            input_state = GPIO.input(12)
-            sleep(0.2)
-            if input_state == False:
-                print 'Button Pressed'
-    except:
-        print 'error in button loop'
-        traceback.print_exc()
-
+    while True:
+        input_state = GPIO.input(12)
+        sleep(0.2)
+        if input_state == False:
+            print 'Button Pressed'
 
 def main():
     try:
@@ -77,10 +67,8 @@ def main():
             sleep(120)
     except:
         traceback.print_exc()
-        print 'exiting.'
-        lcd.clear()
-        lcd.write_string('INACTIVE')
         GPIO.cleanup()
+        print "exiting."
 
 
 # call main
