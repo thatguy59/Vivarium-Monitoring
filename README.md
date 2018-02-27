@@ -6,7 +6,9 @@ The goal is to use DHT22 sensors to log humidity and temperature somewhere that 
 
 ## Running this yourself
 
-I hope to provide a schematic at some point once it's stabilized, until then you'd have to reverse engineer it....so good luck!
+There's a Fritzing file of the layout, it's not perfectly laid out but it should hopefully be useful.
+
+![circuit diagram layout][layout_bb.png]
 
 Create a file called `api` with your ThingSpeak API key, this is `.gitignored` so that I don't publish my key.
 
